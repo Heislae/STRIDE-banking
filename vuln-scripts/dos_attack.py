@@ -38,4 +38,4 @@ def start_attack(url, num_threads=100):
         print("Stopping attack...")
 
 if __name__ == "__main__":
-    start_attack('http://localhost/vulnerable-app/login.php')
+    start_attack('http://localhost/STRIDE-banking/login.php')

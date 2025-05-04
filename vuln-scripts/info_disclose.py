@@ -1,6 +1,6 @@
 import requests
 
-TARGET = "http://localhost/vulnerable-app"
+TARGET = "http://localhost/STRIDE-banking"
 
 def fetch_sensitive_data():
     # 1. Dump all users via API

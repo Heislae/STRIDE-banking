@@ -24,7 +24,8 @@ $transactions = $db->query("SELECT * FROM transactions WHERE user_id = $userId O
 <body>
     <div class="container">
         <h1>Dashboard</h1>
-        <p>Welcome, <?= htmlspecialchars($_SESSION['username']) ?>!</p>
+        <p>Welcome, <?= htmlspecialchars($_SESSION['username'])?>!</p>
+        <p>You are a: <?= htmlspecialchars($_SESSION['role']) ?></p>
         
         <div class="user-info">
             <h2>Your Information</h2>
