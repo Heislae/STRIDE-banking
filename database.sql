@@ -46,12 +46,11 @@ VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
 -- Insert regular user (password: User@123)
 INSERT INTO users (username, password, email, role, full_name, address, phone)
 VALUES ('user1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user1@example.com', 'user', 'Regular User', '456 User Ave', '555-5678');
+
+--Insert regular user (cust1 cust1)
+INSERT INTO users (username, password, email, role, full_name, address, phone)
+VALUES ('user1', '$2y$10$oEeiWA7hLxJeIF4xmgz4Y.MXUw5d2oQXmsEWD2pH.f.2CvT8ZHfkC', 'user1@example.com', 'user', 'Regular User', '456 User Ave', '555-5678');
 -- END [SQL QUERY NUMBER 3]
-
-
--- Create another user with the credentials:
--- username: cust1
--- password: cust1
 
 
 -- START [SQL QUERY NUMBER 4]
@@ -126,3 +125,11 @@ VALUES (
 );
 
 -- END [SQL QUERY NUMBER 4]
+
+-- START [SQL QUERY NUMBER 5]
+-- Add columns for password reset functionality
+ALTER TABLE users 
+ADD COLUMN reset_token VARCHAR(64) NULL,
+ADD COLUMN reset_expires INT NULL;
+
+-- END [SQL QUERY NUMBER 5]

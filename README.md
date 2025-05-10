@@ -115,7 +115,7 @@ Or entierly drop the database of the logs.
 ---------------------------
 ### Information Disclosure
 
-**Information Disclouse** refers to the vulnerabilities that **expose sensitive data to unauthorized personnel**. This can mean an **attacker** who **gained access** to data **by privilege escalation**, a **user** who **just happened** to **see the database**, or an **unauthorized employee** that has a **misconfigured account** which **has an administrative rights** (and many more scenarios).
+**Information Disclosure** refers to the vulnerabilities that **expose sensitive data to unauthorized personnel**. This can mean an **attacker** who **gained access** to data **by privilege escalation**, a **user** who **just happened** to **see the database**, or an **unauthorized employee** that has a **misconfigured account** which **has an administrative rights** (and many more scenarios).
 
 Below are the examples of how this web app presents the Information Disclosure threats.
 
