@@ -162,7 +162,6 @@ $transactions = $db->query("SELECT * FROM transactions WHERE user_id = $userId O
                     <ul>
                         <li><a href="dashboard.php" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
                         <li><a href="transactions.php"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
-                        <li><a href="transfer.php"><i class="fas fa-paper-plane"></i> Transfer</a></li>
                         <li><a href="profile.php"><i class="fas fa-user"></i> Profile</a></li>
                     </ul>
                 </nav>
