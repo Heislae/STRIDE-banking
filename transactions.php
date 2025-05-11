@@ -296,7 +296,7 @@ $transactions = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="balance-card">
             <h3>Available Balance</h3>
-            <div class="balance-amount">$<?= number_format($balance, 2) ?></div>
+            <div class="balance-amount">Php<?= number_format($balance, 2) ?></div>
         </div>
 
         <div class="transfer-card">

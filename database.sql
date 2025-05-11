@@ -49,7 +49,7 @@ VALUES ('user1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
 
 --Insert regular user (cust1 cust1)
 INSERT INTO users (username, password, email, role, full_name, address, phone)
-VALUES ('user1', '$2y$10$oEeiWA7hLxJeIF4xmgz4Y.MXUw5d2oQXmsEWD2pH.f.2CvT8ZHfkC', 'user1@example.com', 'user', 'Regular User', '456 User Ave', '555-5678');
+VALUES ('cust1', '$2y$10$oEeiWA7hLxJeIF4xmgz4Y.MXUw5d2oQXmsEWD2pH.f.2CvT8ZHfkC', 'cust11@example.com', 'user', 'Regular User', 'sa bahay', '123123123');
 -- END [SQL QUERY NUMBER 3]
 
 

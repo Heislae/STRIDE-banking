@@ -198,11 +198,11 @@ $transactions = $db->query("SELECT * FROM transactions WHERE user_id = $userId O
             <div class="dashboard-card">
                 <h2><i class="fas fa-piggy-bank"></i> Current Balance</h2>
                 <div class="balance-display">
-                    $<?= number_format(htmlspecialchars(array_sum(array_column($transactions, 'amount'))), 2) ?>
+                    Php<?= number_format(htmlspecialchars(array_sum(array_column($transactions, 'amount'))), 2) ?>
                 </div>
                 <div class="info-grid">
                     <span class="info-label">Available:</span>
-                    <span class="info-value">$<?= number_format(htmlspecialchars(array_sum(array_column($transactions, 'amount'))), 2) ?></span>
+                    <span class="info-value">Php<?= number_format(htmlspecialchars(array_sum(array_column($transactions, 'amount'))), 2) ?></span>
                     
                     <span class="info-label">Last Deposit:</span>
                     <span class="info-value">
@@ -210,7 +210,7 @@ $transactions = $db->query("SELECT * FROM transactions WHERE user_id = $userId O
                         $lastDeposit = array_filter($transactions, function($tx) { 
                             return $tx['amount'] > 0; 
                         });
-                        echo isset($lastDeposit[0]) ? '$'.number_format(end($lastDeposit)['amount'], 2) : 'None';
+                        echo isset($lastDeposit[0]) ? 'Php'.number_format(end($lastDeposit)['amount'], 2) : 'None';
                         ?>
                     </span>
                 </div>
