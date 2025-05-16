@@ -43,8 +43,7 @@ This web app has:
 #### Brute Force
 Python Code for Brute Force Attack:
 ```python
-for password in ["admin","Admin123","password"]: 
-    requests.post("/login.php", data={"username":"admin","password":password}) 
+# Check vuln_scripts/brute_force.py
 ```
 ---
 
